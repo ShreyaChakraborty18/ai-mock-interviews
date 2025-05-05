@@ -5,9 +5,10 @@ import { getRandomInterviewCover } from "@/lib/utils";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import DisplayTechIcons from "./DisplayTechIcons";
+import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
 
-const InterviewCard = ({
-  interviewId,
+const InterviewCard = async ({
+  id,
   userId,
   role,
   type,
@@ -15,7 +16,7 @@ const InterviewCard = ({
   createdAt,
 }: InterviewCardProps) => {
   // Placeholder for feedback data. Initially set to `null`.
-  const feedback = null as Feedback | null;
+  const feedback = userId && id ? await getFeedbackByInterviewId({ interviewId: id, userId }) : null;
   //type -> type of interview (Technical, Behavioral, etc.)
   //mixed type -> mixed interview (Technical + Behavioral)
 
@@ -93,14 +94,14 @@ const InterviewCard = ({
         </div>
 
         <div className="flex flex-row justify-between">
-        <DisplayTechIcons techStack={techstack} />
+          <DisplayTechIcons techStack={techstack} />
 
-          <Button className="btn=primary">
+          <Button className="btn-primary">
             <Link
               href={
                 feedback
-                  ? `/interview/${interviewId}/feedback`
-                  : `/interview/${interviewId}`
+                  ? `/interview/${id}/feedback`
+                  : `/interview/${id}`
               }
             >
               {feedback ? "Check Feedback" : "View Interview"}

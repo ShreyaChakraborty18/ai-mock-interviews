@@ -66,6 +66,7 @@ export async function signUp(params: SignUpParams) {
     };
   }
 }
+
 // Sign in user with email and idToken
 export async function signIn(params: SignInParams) {
   const { email, idToken } = params;
@@ -130,3 +131,4 @@ export async function isAuthenticated() {
   const user = await getCurrentUser();
   return !!user;
 }
+
